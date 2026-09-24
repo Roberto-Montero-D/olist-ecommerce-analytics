@@ -1,0 +1,30 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# Raw and processed data
+data/raw/*
+data/processed/*
+
+# Keep documentation files inside data
+!data/README.md
+
+# Power BI temporary files
+*.tmp
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Python tooling
+.pytest_cache/
+.coverage
+htmlcov/

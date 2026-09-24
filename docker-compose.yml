@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: olist_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: olist
+      POSTGRES_PASSWORD: olist_dev
+      POSTGRES_DB: olist
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
