@@ -11,14 +11,14 @@ intelligence, and later machine learning.
 
 | Phase | Scope                                                             | Status   |
 |:------|:------------------------------------------------------------------|:---------|
-| B0    | Environment, raw-data audit, source schema, ingestion, validation | Complete |
-| B1    | SQL business analysis                                             | Complete |
-| B2    | Dimensional modeling and PostgreSQL data warehouse                | Complete |
-| B3    | Python exploratory analytics                                      | Complete |
-| B3.5  | Architecture, diagrams, testing, and GitHub Actions CI            | Complete |
-| B4    | Power BI / business intelligence                                  | Next     |
-| B5    | Feature engineering / machine learning                            | Planned  |
-| B6    | Final portfolio / production polish                               | Planned  |
+| Phase 0    | Environment, raw-data audit, source schema, ingestion, validation | Complete |
+| Phase 1    | SQL business analysis                                             | Complete |
+| Phase 2    | Dimensional modeling and PostgreSQL data warehouse                | Complete |
+| Phase 3    | Python exploratory analytics                                      | Complete |
+| Phase 4  | Architecture, diagrams, testing, and GitHub Actions CI            | Complete |
+| Phase 5    | Power BI / business intelligence                                  | Next     |
+| Phase 6    | Feature engineering / machine learning                            | Planned  |
+| Phase 7    | Final portfolio / production polish                               | Planned  |
 
 ## Architecture
 
@@ -51,7 +51,7 @@ Warehouse construction is deterministic: design validation → schema creation �
 dimension validation → fact loading → final reconciliation and analytical validation.
 
 For the complete architectural rationale, role-playing dimensions, geographic modeling, and CI
-boundary, see [`docs/B3_5_system_architecture.md`](docs/B3_5_system_architecture.md).
+boundary, see [`docs/phase_4_system_architecture.md`](docs/phase_4_system_architecture.md).
 
 ## Technology
 
@@ -65,7 +65,7 @@ boundary, see [`docs/B3_5_system_architecture.md`](docs/B3_5_system_architecture
 - GitHub Actions
 - pytest
 - Ruff
-- Power BI (B4)
+- Power BI (Phase 5)
 
 ## Continuous Integration
 
@@ -124,12 +124,12 @@ olist-ecommerce-analytics/
 │   │   ├── warehouse_pipeline.dot
 │   │   └── warehouse_pipeline.svg
 │   ├── data_dictionary.md
-│   ├── B1_sql_business_analysis.md
-│   ├── B2_dimensional_model.md
-│   ├── B2_warehouse_data_dictionary.md
-│   ├── B2_warehouse_validation.md
-│   ├── B3_python_eda_findings.md
-│   └── B3_5_system_architecture.md
+│   ├── phase_1_sql_business_analysis.md
+│   ├── phase_2_dimensional_model.md
+│   ├── phase_2_warehouse_data_dictionary.md
+│   ├── phase_2_warehouse_validation.md
+│   ├── phase_3_python_eda_findings.md
+│   └── phase_4_system_architecture.md
 ├── docker-compose.yml
 ├── pyproject.toml
 ├── requirements-ci.txt
@@ -156,7 +156,7 @@ Nine Olist source tables are loaded into PostgreSQL.
 Five-digit Brazilian CEP prefixes are stored as character identifiers so leading zeroes remain
 significant.
 
-## B1 — SQL business analysis
+## Phase 1 — SQL business analysis
 
 The comparable business-analysis period is January 2017 through August 2018, generally using
 delivered orders.
@@ -181,7 +181,7 @@ Examples of validated findings include:
 
 These are descriptive historical associations; the dataset does not establish causal effects.
 
-## B2 — Dimensional data warehouse
+## Phase 2 — Dimensional data warehouse
 
 The warehouse uses a fact constellation with conformed dimensions rather than a single flattened
 table.
@@ -229,18 +229,18 @@ Reviews are not collapsed to one row per order. The source contains 99,224 revie
 reviewed orders; 547 orders have multiple reviews and 202 of those have differing scores. The
 warehouse therefore preserves the atomic review-event grain.
 
-## B3 — Python exploratory analysis
+## Phase 3 — Python exploratory analysis
 
 The primary notebook is [`notebooks/01_warehouse_eda.ipynb`](notebooks/01_warehouse_eda.ipynb).
 
-B3 consumes the validated `dw` warehouse rather than rebuilding source relationships in pandas. The
+Phase 3 consumes the validated `dw` warehouse rather than rebuilding source relationships in pandas. The
 executed notebook preserves its analytical outputs for direct review on GitHub.
 
-The documented findings are in [`docs/B3_python_eda_findings.md`](docs/B3_python_eda_findings.md).
+The documented findings are in [`docs/phase_3_python_eda_findings.md`](docs/phase_3_python_eda_findings.md).
 
 ## Warehouse validation
 
-B2 final validation passed:
+Phase 2 final validation passed:
 
 - source-to-warehouse fact row differences: 0;
 - natural-grain duplicate groups: 0;
@@ -252,10 +252,10 @@ B2 final validation passed:
 - payment-value difference from source: R\$0.00;
 - invalid review scores/comment flags: 0.
 
-Warehouse analytical smoke tests also reproduce the established B1 revenue, category, and
+Warehouse analytical smoke tests also reproduce the established Phase 1 revenue, category, and
 delivery/satisfaction results.
 
-See [`docs/B2_warehouse_validation.md`](docs/B2_warehouse_validation.md) for the validation record.
+See [`docs/phase_2_warehouse_validation.md`](docs/phase_2_warehouse_validation.md) for the validation record.
 
 ## Rebuilding the warehouse
 
@@ -285,21 +285,21 @@ Get-Content sql/warehouse/04_validate_warehouse.sql |
 
 - [`docs/data_dictionary.md`](docs/data_dictionary.md) — immutable source-layer data dictionary and
   data-quality notes
-- [`docs/B1_sql_business_analysis.md`](docs/B1_sql_business_analysis.md) — SQL business analysis and
+- [`docs/phase_1_sql_business_analysis.md`](docs/phase_1_sql_business_analysis.md) — SQL business analysis and
   findings
-- [`docs/B2_dimensional_model.md`](docs/B2_dimensional_model.md) — dimensional-model design and
+- [`docs/phase_2_dimensional_model.md`](docs/phase_2_dimensional_model.md) — dimensional-model design and
   modeling decisions
-- [`docs/B2_warehouse_data_dictionary.md`](docs/B2_warehouse_data_dictionary.md) — warehouse grains
+- [`docs/phase_2_warehouse_data_dictionary.md`](docs/phase_2_warehouse_data_dictionary.md) — warehouse grains
   and field semantics
-- [`docs/B2_warehouse_validation.md`](docs/B2_warehouse_validation.md) — final warehouse validation
+- [`docs/phase_2_warehouse_validation.md`](docs/phase_2_warehouse_validation.md) — final warehouse validation
   record
-- [`docs/B3_python_eda_findings.md`](docs/B3_python_eda_findings.md) — Python EDA findings
-- [`docs/B3_5_system_architecture.md`](docs/B3_5_system_architecture.md) — end-to-end architecture,
+- [`docs/phase_3_python_eda_findings.md`](docs/phase_3_python_eda_findings.md) — Python EDA findings
+- [`docs/phase_4_system_architecture.md`](docs/phase_4_system_architecture.md) — end-to-end architecture,
   data modeling, and CI design
 - [`docs/diagrams/`](docs/diagrams/) — editable Graphviz sources and rendered SVG architecture
   diagrams
 
 ## Next phase
 
-B4 builds the Power BI semantic model and dashboard suite directly from the validated PostgreSQL
+Phase 5 builds the Power BI semantic model and dashboard suite directly from the validated PostgreSQL
 `dw` warehouse.

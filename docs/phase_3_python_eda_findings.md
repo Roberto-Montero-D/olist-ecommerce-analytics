@@ -1,4 +1,4 @@
-# B3 — Python Exploratory Data Analysis
+# Phase 3 — Python Exploratory Data Analysis
 
 **Project:** Olist E-Commerce Analytics
 **Status:** Complete
@@ -8,7 +8,7 @@
 
 ## 1. Objective
 
-B3 uses Python as the analytical layer on top of the validated B2 warehouse. The phase is designed
+Phase 3 uses Python as the analytical layer on top of the validated Phase 2 warehouse. The phase is designed
 to add exploratory and statistical interpretation without bypassing the warehouse or reloading raw
 CSV files.
 
@@ -138,18 +138,18 @@ explicit cohort definition, eligibility window, and return period.
 
 The cleaned notebook saves formal, presentation-ready figures to `docs/figures/`:
 
-- `b3_monthly_revenue.png`
-- `b3_top_categories.png`
-- `b3_seller_concentration.png`
-- `b3_delivery_review_score.png`
-- `b3_orders_by_state.png`
+- `phase_3_monthly_revenue.png`
+- `phase_3_top_categories.png`
+- `phase_3_seller_concentration.png`
+- `phase_3_delivery_review_score.png`
+- `phase_3_orders_by_state.png`
 
 The plots intentionally use restrained Matplotlib formatting: clear labels, light reference grids,
 direct annotations only where they add analytical value, and no decorative theme.
 
-## 9. B3 conclusions
+## 9. Phase 3 conclusions
 
-B3 confirms that the dimensional warehouse can serve as a reliable Python analytical source without
+Phase 3 confirms that the dimensional warehouse can serve as a reliable Python analytical source without
 fact-grain fanout.
 
 The strongest business findings are:
@@ -163,5 +163,5 @@ The strongest business findings are:
 - marketplace activity is geographically concentrated;
 - repeat purchasing is uncommon in the observed window.
 
-B4 will translate these validated metrics into Power BI. B5 will later treat late-delivery
+Phase 5 will translate these validated metrics into Power BI. Phase 6 will later treat late-delivery
 prediction as a separate predictive problem with explicit causal-availability and leakage controls.

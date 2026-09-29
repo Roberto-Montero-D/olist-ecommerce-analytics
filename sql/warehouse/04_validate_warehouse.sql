@@ -2,7 +2,7 @@
 ===============================================================================
 Olist E-Commerce Analytics
 File: sql/warehouse/04_validate_warehouse.sql
-Phase: B2.3 — Final Warehouse Validation
+Phase: Phase 2.3 — Final Warehouse Validation
 
 Purpose
 -------

@@ -102,7 +102,7 @@
 <g id="node7" class="node">
 <title>bi</title>
 <path fill="#ede9fe" stroke="black" d="M414,-46C414,-46 227,-46 227,-46 221,-46 215,-40 215,-34 215,-34 215,-12 215,-12 215,-6 221,0 227,0 227,0 414,0 414,0 420,0 426,-6 426,-12 426,-12 426,-34 426,-34 426,-40 420,-46 414,-46"/>
-<text text-anchor="middle" x="320.5" y="-26.8" font-family="Arial" font-size="14.00">Power BI — B4</text>
+<text text-anchor="middle" x="320.5" y="-26.8" font-family="Arial" font-size="14.00">Power BI — Phase 5</text>
 <text text-anchor="middle" x="320.5" y="-11.8" font-family="Arial" font-size="14.00">Semantic Model + Dashboards</text>
 </g>
 <!-- dw&#45;&gt;bi -->
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>ml</title>
 <path fill="#ccfbf1" stroke="black" d="M631,-46C631,-46 474,-46 474,-46 468,-46 462,-40 462,-34 462,-34 462,-12 462,-12 462,-6 468,0 474,0 474,0 631,0 631,0 637,0 643,-6 643,-12 643,-12 643,-34 643,-34 643,-40 637,-46 631,-46"/>
-<text text-anchor="middle" x="552.5" y="-26.8" font-family="Arial" font-size="14.00">Machine Learning — B5</text>
+<text text-anchor="middle" x="552.5" y="-26.8" font-family="Arial" font-size="14.00">Machine Learning — Phase 6</text>
 <text text-anchor="middle" x="552.5" y="-11.8" font-family="Arial" font-size="14.00">Python analytical datasets</text>
 </g>
 <!-- dw&#45;&gt;ml -->

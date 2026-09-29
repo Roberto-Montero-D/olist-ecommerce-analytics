@@ -2,7 +2,7 @@
 ===============================================================================
 Olist E-Commerce Analytics
 File: sql/warehouse/00_validate_dimensional_design.sql
-Phase: B2 — Dimensional Modeling & Data Warehouse
+Phase: Phase 2 — Dimensional Modeling & Data Warehouse
 
 Purpose
 -------

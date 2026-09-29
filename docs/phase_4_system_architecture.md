@@ -1,4 +1,4 @@
-# B3.5 — System Architecture
+# Phase 4 — System Architecture
 
 **Project:** Olist E-Commerce Analytics
 **Status:** Architecture documented
@@ -32,7 +32,7 @@ flowchart TD
     SQL["SQL Business Analysis<br/>sql/analysis/"]
     PY["Python EDA<br/>notebooks/01_warehouse_eda.ipynb"]
     BI["Power BI<br/>Semantic Model & Dashboards"]
-    ML["Machine Learning<br/>Future B5 Phase"]
+    ML["Machine Learning<br/>Future Phase 6 Phase"]
 
     CSV --> AUDIT
     CSV --> SOURCE
@@ -315,7 +315,7 @@ This allows the warehouse to preserve business records without fabricating geogr
 
 Python connects to PostgreSQL through `src/database.py`.
 
-The primary B3 exploratory analysis is:
+The primary Phase 3 exploratory analysis is:
 
 `notebooks/01_warehouse_eda.ipynb`
 
@@ -335,7 +335,7 @@ fan-out and double-counting.
 
 ### Machine Learning
 
-The later B5 machine-learning phase will consume engineered analytical data derived from the
+The later Phase 6 machine-learning phase will consume engineered analytical data derived from the
 validated warehouse through Python.
 
 Machine learning is independent of the Power BI semantic layer.

@@ -2,7 +2,7 @@
 ===============================================================================
 Olist E-Commerce Analytics
 File: sql/warehouse/03_load_facts.sql
-Phase: B2.2 — Dimensional Modeling & Data Warehouse
+Phase: Phase 2.2 — Dimensional Modeling & Data Warehouse
 
 Purpose
 -------

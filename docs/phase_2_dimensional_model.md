@@ -1,4 +1,4 @@
-# B2 — Dimensional Modeling & Data Warehouse
+# Phase 2 — Dimensional Modeling & Data Warehouse
 
 **Project:** Olist E-Commerce Analytics
 **Status:** Complete / validated
@@ -7,7 +7,7 @@
 
 ## 1. Objective
 
-B2 transforms the validated Olist source layer into a reusable analytical warehouse for SQL, Python,
+Phase 2 transforms the validated Olist source layer into a reusable analytical warehouse for SQL, Python,
 Power BI, and later machine-learning work.
 
 The model preserves the natural grain of orders, items, payments, and reviews instead of flattening
@@ -159,7 +159,7 @@ information.
 
 ## 5. Final validation
 
-B2.3 validates:
+Phase 2.3 validates:
 
 - exact row-count reconciliation;
 - natural-grain uniqueness;
@@ -181,7 +181,7 @@ Financial reconciliation:
 | Freight    |  R\$2,251,909.54 |  R\$2,251,909.54 |    R\$0.00 |
 | Payments   | R\$16,008,872.12 | R\$16,008,872.12 |    R\$0.00 |
 
-Analytical smoke tests reproduce the established B1 monthly revenue/category results and the
+Analytical smoke tests reproduce the established Phase 1 monthly revenue/category results and the
 delivery-satisfaction relationship.
 
 ## 6. SQL execution order
@@ -197,7 +197,7 @@ delivery-satisfaction relationship.
 
 ## 7. Phase conclusion
 
-B2 is complete and frozen. The PostgreSQL warehouse preserves source grains, resolves reusable
+Phase 2 is complete and frozen. The PostgreSQL warehouse preserves source grains, resolves reusable
 dimensions, prevents raw-geolocation fan-out, retains multi-review events, and reconciles exactly to
 the source for fact counts and financial measures.
 

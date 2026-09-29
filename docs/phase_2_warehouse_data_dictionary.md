@@ -1,4 +1,4 @@
-# B2 Warehouse Data Dictionary Addendum
+# Phase 2 Warehouse Data Dictionary Addendum
 
 This addendum documents the warehouse layer. The existing `docs/data_dictionary.md` remains the
 source-layer data dictionary and should not be overwritten.

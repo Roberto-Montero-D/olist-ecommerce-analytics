@@ -1,7 +1,7 @@
-# B2 Warehouse Validation
+# Phase 2 Warehouse Validation
 
 **Project:** Olist E-Commerce Analytics
-**Phase:** B2.3
+**Phase:** Phase 2.3
 **Status:** Passed
 **Validation script:** `sql/warehouse/04_validate_warehouse.sql`
 
@@ -69,7 +69,7 @@ Descriptive source coverage:
 - 7,827 are late under the warehouse definition;
 - 88,649 are on-time or early.
 
-These full-source counts should not be confused with B1 metrics calculated on a restricted
+These full-source counts should not be confused with Phase 1 metrics calculated on a restricted
 analytical population.
 
 ## 7. Financial reconciliation
@@ -138,11 +138,11 @@ Examples:
 - On-time/early reviewed deliveries average 4.30 stars and -12.94 days relative to the estimate.
 
 The state smoke test measures orders by customer state, not unique-customer share, so its
-percentages are not expected to equal the B1 unique-customer geography percentages.
+percentages are not expected to equal the Phase 1 unique-customer geography percentages.
 
 ## 11. Conclusion
 
-B2 validation passed. The warehouse:
+Phase 2 validation passed. The warehouse:
 
 - preserves source fact counts and natural grains;
 - has no detected dimensional orphans;
@@ -151,6 +151,6 @@ B2 validation passed. The warehouse:
 - reconciles monetary measures exactly;
 - provides complete customer/seller CEP coverage through documented fallback members;
 - preserves atomic review events;
-- reproduces established B1 analytical results.
+- reproduces established Phase 1 analytical results.
 
 The warehouse is accepted as the validated analytical source for subsequent project phases.
