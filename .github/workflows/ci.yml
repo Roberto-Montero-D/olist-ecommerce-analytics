@@ -30,6 +30,28 @@ jobs:
       - name: Ruff lint
         run: ruff check src tests
 
+  markdown-quality:
+    name: Markdown quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install PyMarkdown
+        run: pip install pymarkdownlnt
+
+      - name: Lint Markdown
+        shell: bash
+        run: |
+          git ls-files -z "*.md" |
+            xargs -0 -n 1 pymarkdown --config .pymarkdown scan
+
   warehouse-integration:
     name: Warehouse integration
     runs-on: ubuntu-latest
