@@ -1,0 +1,80 @@
+digraph G {
+graph [
+  bgcolor="white",
+  pad="0.35",
+  nodesep="0.45",
+  ranksep="0.70",
+  fontname="Arial",
+  splines=ortho
+];
+node [fontname="Arial"];
+edge [fontname="Arial", fontsize=8, color="#64748B", arrowsize=0.65];
+
+label="Olist Dimensional Warehouse — Fact Constellation (schema: dw)";
+labelloc="t";
+fontsize=20;
+
+subgraph cluster_shared {
+  label="Shared conformed dimensions";
+  fontsize=11;
+  style="rounded,dashed";
+  color="#CBD5E1";
+  margin=14;
+
+  node [shape=box, style="rounded,filled", fillcolor="#E2E8F0", margin="0.14,0.10"];
+  date [label="dim_date\nPK  date_key\nRole-playing date dimension"];
+  customer [label="dim_customer\nPK  customer_key\nUK  customer_unique_id"];
+  location [label="dim_location\nPK  location_key\nUK  zip_code_prefix\nCanonical CEP geography"];
+  status [label="dim_order_status\nPK  order_status_key\nUK  order_status"];
+
+  {rank=same; date; customer; location; status;}
+}
+
+bus [shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#94A3B8",
+     label="Conformed-dimension relationship bus\nDate • Customer • Location • Order Status",
+     width=5.8, height=0.55];
+
+date -> bus [arrowhead=none];
+customer -> bus [arrowhead=none];
+location -> bus [arrowhead=none];
+status -> bus [arrowhead=none];
+
+orders [shape=box, style="rounded,filled", fillcolor="#DBEAFE", penwidth=1.5,
+ label="fact_orders\nGrain: 1 row / order_id\nPK  order_key   •   UK  order_id\nDelivery metrics"];
+
+payments [shape=box, style="rounded,filled", fillcolor="#FEF3C7", penwidth=1.5,
+ label="fact_payments\nGrain: order_id + payment_sequential\nPK  payment_key\nPayment value"];
+
+reviews [shape=box, style="rounded,filled", fillcolor="#FCE7F3", penwidth=1.5,
+ label="fact_reviews\nGrain: review_id + order_id\nPK  review_key\nReview score + comment flags"];
+
+items [shape=box, style="rounded,filled", fillcolor="#DCFCE7", penwidth=1.5,
+ label="fact_order_items\nGrain: order_id + order_item_id\nPK  order_item_key\nPrice + freight"];
+
+{rank=same; orders; payments; reviews; items;}
+
+bus -> orders;
+bus -> payments;
+bus -> reviews;
+bus -> items;
+
+product [shape=box, style="rounded,filled", fillcolor="#E2E8F0",
+ label="dim_product\nPK  product_key\nUK  product_id"];
+
+seller [shape=box, style="rounded,filled", fillcolor="#E2E8F0",
+ label="dim_seller\nPK  seller_key\nUK  seller_id"];
+
+{rank=same; product; seller;}
+product -> items [label="product_key"];
+seller -> items [label="seller_key"];
+
+roles [shape=note, style="filled", fillcolor="#F8FAFC", margin="0.14,0.10",
+ label="Role-playing relationships\n\nDate\n• fact_orders: purchase, approved, carrier, delivered customer, estimated delivery\n• fact_order_items: purchase, shipping limit\n• fact_payments: purchase\n• fact_reviews: purchase, review creation, review answer\n\nLocation\n• fact_orders / payments / reviews: customer location\n• fact_order_items: customer location + seller location"];
+
+principles [shape=note, style="filled", fillcolor="#F8FAFC", margin="0.14,0.10",
+ label="Model rules\n• Conformed dimensions are shared across facts\n• Facts are never joined directly\n• Surrogate keys resolve warehouse relationships\n• Each fact preserves its natural business grain"];
+
+{rank=same; roles; principles;}
+orders -> roles [style=invis];
+items -> principles [style=invis];
+}
