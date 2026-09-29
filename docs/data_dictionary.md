@@ -13,6 +13,21 @@ Raw source data is treated as immutable. Data-quality issues identified
 here are preserved in the raw layer and handled explicitly in downstream
 transformations.
 
+### Postal Prefix Representation
+
+The Olist files expose the first five digits of the Brazilian CEP rather than
+the complete eight-digit CEP. These fields are identifiers, not numeric
+measures. The source CSVs preserve leading zeroes (for example, `01037`), so
+ZIP/CEP-prefix columns are read as five-character strings in Python and stored
+as `CHAR(5)` in PostgreSQL. Downstream transformations must preserve this
+representation; converting the prefix to an integer would discard significant
+leading zeroes.
+
+City names remain unchanged in the immutable source layer. Any case, accent,
+whitespace, or punctuation normalization used to evaluate geographic
+ambiguity is derived downstream and must retain the original city value for
+traceability.
+
 ---
 
 ## Dataset Overview
@@ -61,7 +76,7 @@ RFM, and customer-level analyses.
 |---|---|---:|---|
 | customer_id | string | No | Order-level customer identifier |
 | customer_unique_id | string | No | Persistent customer identifier across orders |
-| customer_zip_code_prefix | int64 | No | Customer ZIP-code prefix |
+| customer_zip_code_prefix | string (5 digits) | No | First five digits of the customer CEP; leading zeroes are significant |
 | customer_city | string | No | Customer city |
 | customer_state | string | No | Customer state |
 
@@ -332,7 +347,7 @@ values occur in exactly the same product records.
 | Column | Raw Type | Nullable | Description |
 |---|---|---:|---|
 | seller_id | string | No | Identifier of the seller |
-| seller_zip_code_prefix | int64 | No | Seller ZIP-code prefix |
+| seller_zip_code_prefix | string (5 digits) | No | First five digits of the seller CEP; leading zeroes are significant |
 | seller_city | string | No | Seller city |
 | seller_state | string | No | Seller state |
 
@@ -370,7 +385,7 @@ table because a ZIP-code prefix can occur in multiple geolocation rows.
 
 | Column | Raw Type | Nullable | Description |
 |---|---|---:|---|
-| geolocation_zip_code_prefix | int64 | No | ZIP-code prefix associated with the geographic observation |
+| geolocation_zip_code_prefix | string (5 digits) | No | First five digits of the CEP associated with the geographic observation; leading zeroes are significant |
 | geolocation_lat | float64 | No | Latitude |
 | geolocation_lng | float64 | No | Longitude |
 | geolocation_city | string | No | City |

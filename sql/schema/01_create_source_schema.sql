@@ -7,7 +7,7 @@ SET search_path TO olist;
 CREATE TABLE customers (
     customer_id             TEXT PRIMARY KEY,
     customer_unique_id      TEXT NOT NULL,
-    customer_zip_code_prefix INTEGER NOT NULL,
+    customer_zip_code_prefix CHAR(5) NOT NULL,
     customer_city           TEXT NOT NULL,
     customer_state          TEXT NOT NULL
 );
@@ -41,7 +41,7 @@ CREATE TABLE products (
 
 CREATE TABLE sellers (
     seller_id              TEXT PRIMARY KEY,
-    seller_zip_code_prefix INTEGER NOT NULL,
+    seller_zip_code_prefix CHAR(5) NOT NULL,
     seller_city            TEXT NOT NULL,
     seller_state           TEXT NOT NULL
 );
@@ -112,7 +112,7 @@ CREATE TABLE category_translation (
 );
 
 CREATE TABLE geolocation (
-    geolocation_zip_code_prefix  INTEGER NOT NULL,
+    geolocation_zip_code_prefix  CHAR(5) NOT NULL,
     geolocation_lat              NUMERIC NOT NULL,
     geolocation_lng              NUMERIC NOT NULL,
     geolocation_city             TEXT NOT NULL,
