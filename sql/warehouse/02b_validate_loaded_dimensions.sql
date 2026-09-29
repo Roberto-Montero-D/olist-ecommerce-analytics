@@ -2,7 +2,7 @@
 ===============================================================================
 Olist E-Commerce Analytics
 File: sql/warehouse/02b_validate_loaded_dimensions.sql
-Phase: B2.2 — Post-load dimensional validation
+Phase: Phase 2.2 — Post-load dimensional validation
 
 Purpose
 -------

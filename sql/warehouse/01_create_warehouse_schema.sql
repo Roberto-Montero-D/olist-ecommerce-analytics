@@ -2,11 +2,11 @@
 ===============================================================================
 Olist E-Commerce Analytics
 File: sql/warehouse/01_create_warehouse_schema.sql
-Phase: B2.2 — Dimensional Modeling & Data Warehouse
+Phase: Phase 2.2 — Dimensional Modeling & Data Warehouse
 
 Purpose
 -------
-Create the empty dimensional warehouse schema from the frozen B2 design.
+Create the empty dimensional warehouse schema from the frozen Phase 2 design.
 
 This script creates structure only. It does not load warehouse data.
 ===============================================================================

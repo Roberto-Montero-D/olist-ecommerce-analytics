@@ -1,4 +1,4 @@
-# B1 — SQL Business Analysis
+# Phase 1 — SQL Business Analysis
 
 ## Olist E-Commerce Analytics
 
@@ -11,7 +11,7 @@
 
 ## 1. Objective
 
-B1 establishes a reproducible descriptive understanding of the Olist marketplace before dimensional
+Phase 1 establishes a reproducible descriptive understanding of the Olist marketplace before dimensional
 modeling, BI, and machine learning.
 
 The analysis covers four business areas:
@@ -40,7 +40,7 @@ The source dataset extends approximately from September 2016 through October 201
 are not equally suitable for direct monthly comparison: 2016 activity is sparse and discontinuous,
 while September and October 2018 do not provide comparable delivered-order coverage.
 
-Comparable B1 business-performance analysis therefore uses:
+Comparable Phase 1 business-performance analysis therefore uses:
 
 `2017-01-01 <= order_purchase_timestamp < 2018-09-01`
 
@@ -92,7 +92,7 @@ All repeat-purchase and unique-customer analyses therefore use `customer_unique_
 
 ----------------------------------------------------------------------------------------------------
 
-## 3. B1.1 — Orders and Revenue
+## 3. Phase 1.1 — Orders and Revenue
 
 ### 3.1 Objective
 
@@ -132,7 +132,7 @@ These results show that marketplace revenue reflects both transaction volume and
 
 ----------------------------------------------------------------------------------------------------
 
-## 4. B1.2 — Products and Sellers
+## 4. Phase 1.2 — Products and Sellers
 
 ### 4.1 Product-category performance
 
@@ -218,7 +218,7 @@ rather than dominance by a single seller.
 
 ----------------------------------------------------------------------------------------------------
 
-## 5. B1.3 — Customers and Geography
+## 5. Phase 1.3 — Customers and Geography
 
 ### 5.1 Geographic distribution
 
@@ -293,7 +293,7 @@ observation windows.
 
 ----------------------------------------------------------------------------------------------------
 
-## 6. B1.4 — Delivery and Customer Satisfaction
+## 6. Phase 1.4 — Delivery and Customer Satisfaction
 
 ### 6.1 Overall delivery performance
 
@@ -429,7 +429,7 @@ the machine-learning target is not frozen at this stage.
 
 ## 8. Analytical Limitations
 
-B1 is descriptive and should be interpreted within the limitations of the source data.
+Phase 1 is descriptive and should be interpreted within the limitations of the source data.
 
 1. The dataset covers a finite historical period and does not represent the complete lifetime
     history of each customer.
@@ -460,7 +460,7 @@ B1 is descriptive and should be interpreted within the limitations of the source
 
 ## 9. Phase Conclusion
 
-B1 establishes a reproducible SQL-based business profile of the Olist marketplace.
+Phase 1 establishes a reproducible SQL-based business profile of the Olist marketplace.
 
 The analysis identifies a marketplace characterized by:
 
@@ -474,6 +474,6 @@ The analysis identifies a marketplace characterized by:
 These findings also establish the business definitions and analytical constraints required for
 subsequent project phases.
 
-The next phase, **B2 — Dimensional Modeling and Data Warehouse**, will transform the normalized
+The next phase, **Phase 2 — Dimensional Modeling and Data Warehouse**, will transform the normalized
 source data into a reusable analytical fact-and-dimension model for reporting, BI, and downstream
 analytics.
