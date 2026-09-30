@@ -1,8 +1,9 @@
-import os
 from pathlib import Path
 
 import psycopg2
 import pytest
+
+from src.database_safety import get_test_database_config, verify_test_database
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -17,14 +18,20 @@ PIPELINE = [
 
 
 def connect():
-    return psycopg2.connect(
-        host=os.getenv("POSTGRES_HOST", "localhost"),
-        port=os.getenv("POSTGRES_PORT", "5432"),
-        dbname=os.getenv("POSTGRES_DB", "olist_test"),
-        user=os.getenv("POSTGRES_USER", "olist"),
-        password=os.getenv("POSTGRES_PASSWORD", "olist"),
+    config = get_test_database_config()
+    connection = psycopg2.connect(
+        host=config["POSTGRES_HOST"],
+        port=config["POSTGRES_PORT"],
+        dbname=config["POSTGRES_DB"],
+        user=config["POSTGRES_USER"],
+        password=config["POSTGRES_PASSWORD"],
     )
-
+    try:
+        verify_test_database(connection, config["POSTGRES_DB"])
+    except Exception:
+        connection.close()
+        raise
+    return connection
 
 def execute_file(connection, path: Path) -> None:
     sql = path.read_text(encoding="utf-8-sig")
