@@ -30,6 +30,9 @@ jobs:
       - name: Ruff lint
         run: ruff check src tests
 
+      - name: Run Python unit tests
+        run: pytest -q tests/test_audit_raw_data.py tests/test_database.py
+
   markdown-quality:
     name: Markdown quality
     runs-on: ubuntu-latest

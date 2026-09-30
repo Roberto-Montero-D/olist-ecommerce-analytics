@@ -14,6 +14,7 @@ services:
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./data/raw:/tmp/olist_raw:ro
 
 volumes:
   postgres_data:

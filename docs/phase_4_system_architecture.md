@@ -32,7 +32,7 @@ flowchart TD
     SQL["SQL Business Analysis<br/>sql/analysis/"]
     PY["Python EDA<br/>notebooks/01_warehouse_eda.ipynb"]
     BI["Power BI<br/>Semantic Model & Dashboards"]
-    ML["Machine Learning<br/>Future Phase 6 Phase"]
+    ML["Machine Learning<br/>Future Phase 6"]
 
     CSV --> AUDIT
     CSV --> SOURCE

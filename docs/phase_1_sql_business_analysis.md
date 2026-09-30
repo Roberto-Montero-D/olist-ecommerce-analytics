@@ -354,7 +354,9 @@ Submitted reviews are predominantly positive.
 ### 6.4 Delivery performance and satisfaction
 
 Because review data is not strictly one row per order, review records were aggregated to order level
-before comparison with delivery information.
+before comparison with delivery information. Phase 1 uses the mean of all submitted review scores
+within each order. Phase 3 instead uses the latest review event per order for its satisfaction
+analyses, so small differences in review-derived metrics between the two phases are expected.
 
 The resulting relationship was:
 

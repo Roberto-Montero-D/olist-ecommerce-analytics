@@ -20,7 +20,7 @@ The master analytical table has one row per order. Lower-grain facts are aggrega
 
 - `fact_order_items` → order-level item, seller, revenue, and freight measures;
 - `fact_payments` → order-level payment measures;
-- `fact_reviews` → order-level review-event summary while retaining first/latest review semantics.
+- `fact_reviews` → order-level review-event summary while retaining first/latest review semantics; review events are ordered by `review_answer_timestamp` with `review_id` as a deterministic tie-breaker.
 
 Every merge uses one-to-one validation. The resulting master table preserves 99,441 unique orders
 with zero duplicate `order_id` values.
@@ -85,6 +85,11 @@ The marketplace is therefore concentrated across a relatively small seller segme
 dominated by a single seller.
 
 ## 6. Delivery performance and customer satisfaction
+
+Phase 3 uses the latest submitted review event per order for satisfaction metrics. This differs from
+Phase 1, which averages all submitted review scores within each order before delivery comparison.
+Accordingly, small differences between Phase 1 and Phase 3 review-derived metrics are expected and
+reflect the documented analytical definitions rather than a warehouse reconciliation error.
 
 The controlled delivery/review population contains 95,560 orders:
 
