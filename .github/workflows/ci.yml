@@ -25,7 +25,9 @@ jobs:
           cache: "pip"
 
       - name: Install CI dependencies
-        run: pip install -r requirements-ci.txt
+        run: |
+          pip install -r requirements-ci.txt
+          pip install -e .
 
       - name: Ruff lint
         run: ruff check src tests
