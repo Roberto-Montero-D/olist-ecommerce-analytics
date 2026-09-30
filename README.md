@@ -172,9 +172,9 @@ The default values in `.env.example` match the local PostgreSQL service defined 
 
 ### 2. Add the raw Olist data
 
-Obtain the Olist Brazilian E-Commerce Public Dataset separately and place the nine required CSV
-files in `data/raw/` without renaming them. The exact filenames and data-directory contract are
-documented in [`data/README.md`](data/README.md).
+Download the [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+from Kaggle and place the nine required CSV files in `data/raw/` without renaming them. The exact
+filenames and data-directory contract are documented in [`data/README.md`](data/README.md).
 
 Raw and processed data are intentionally excluded from Git.
 
@@ -256,6 +256,16 @@ GitHub Actions uses a deterministic synthetic fixture instead of the full Olist 
 CI independent of local raw data while exercising the real warehouse SQL pipeline.
 
 ## Source data
+
+**Dataset:** [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+
+**Source:** Kaggle
+
+**Dataset license:** CC BY-NC-SA 4.0
+
+The original dataset is provided by Olist and is not redistributed in this repository. Its licensing
+terms are separate from the MIT license that applies to this repository's code. Download the nine
+source CSV files from the Kaggle dataset page and place them in `data/raw/`.
 
 Nine Olist source tables are loaded into PostgreSQL.
 
