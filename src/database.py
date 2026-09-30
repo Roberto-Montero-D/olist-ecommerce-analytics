@@ -2,10 +2,11 @@ import os
 
 import pandas as pd
 from dotenv import load_dotenv
-from sqlalchemy import create_engine
+from sqlalchemy import URL, create_engine
 from sqlalchemy.engine import Engine
 
 load_dotenv()
+
 
 def get_engine() -> Engine:
     config = {
@@ -23,12 +24,17 @@ def get_engine() -> Engine:
             f"Missing required database environment variables: {', '.join(missing)}"
         )
 
-    connection_url = (
-        f"postgresql+psycopg2://{config['user']}:{config['password']}"
-        f"@{config['host']}:{config['port']}/{config['database']}"
+    connection_url = URL.create(
+        "postgresql+psycopg2",
+        username=config["user"],
+        password=config["password"],
+        host=config["host"],
+        port=int(config["port"]),
+        database=config["database"],
     )
 
     return create_engine(connection_url)
+
 
 def read_query(query: str) -> pd.DataFrame:
     engine = get_engine()

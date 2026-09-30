@@ -74,12 +74,14 @@ GitHub Actions validates the repository on pushes and pull requests to `main`.
 The CI workflow:
 
 - runs Ruff against `src` and `tests`;
+- runs focused Python unit tests for raw-data audit behavior and database configuration;
 - starts an ephemeral PostgreSQL 17 service;
 - loads a deterministic synthetic source fixture;
 - executes the real warehouse SQL pipeline;
 - runs nine warehouse integration tests covering fact grains, conformed dimensions, geographic
   canonicalization/fallback behavior, untranslated categories, multi-review preservation, delivery
-  derivations, financial reconciliation, and review flags.
+  derivations, financial reconciliation, and review flags;
+- lints tracked Markdown files with PyMarkdown.
 
 The CI database is disposable and independent of the local persistent Olist database. The project
 currently implements **CI**, not Continuous Deployment.
@@ -112,6 +114,8 @@ olist-ecommerce-analytics/
 ├── tests/
 │   ├── fixtures/
 │   │   └── ci_seed.sql
+│   ├── test_audit_raw_data.py
+│   ├── test_database.py
 │   └── test_warehouse_integration.py
 ├── docs/
 │   ├── diagrams/
@@ -136,6 +140,120 @@ olist-ecommerce-analytics/
 ├── requirements.txt
 └── README.md
 ```
+
+## Getting Started
+
+### Prerequisites
+
+- Git
+- Python 3.11 or later
+- Docker Desktop with Docker Compose
+
+### 1. Clone and configure the Python environment
+
+From the repository root in PowerShell:
+
+``` powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pip install -e .
+```
+
+Copy the environment template:
+
+``` powershell
+Copy-Item .env.example .env
+```
+
+The default values in `.env.example` match the local PostgreSQL service defined in
+`docker-compose.yml`.
+
+### 2. Add the raw Olist data
+
+Obtain the Olist Brazilian E-Commerce Public Dataset separately and place the nine required CSV
+files in `data/raw/` without renaming them. The exact filenames and data-directory contract are
+documented in [`data/README.md`](data/README.md).
+
+Raw and processed data are intentionally excluded from Git.
+
+### 3. Start PostgreSQL
+
+``` powershell
+docker compose up -d
+docker compose ps
+```
+
+Docker Compose mounts `data/raw/` read-only at `/tmp/olist_raw` inside the PostgreSQL container,
+which is the path used by the ingestion script.
+
+### 4. Create and load the source schema
+
+``` powershell
+Get-Content -Raw sql/schema/01_create_source_schema.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+
+Get-Content -Raw sql/ingestion/01_load_raw_data.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+```
+
+Validate the loaded source layer:
+
+``` powershell
+Get-Content -Raw sql/analysis/00_validate_source.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+
+python src/audit_raw_data.py
+python src/audit_relationships.py
+```
+
+The expected source-table row counts are listed in the [Source data](#source-data) section below.
+
+### 5. Build and validate the warehouse
+
+Run the six warehouse scripts in filename order:
+
+``` powershell
+Get-Content -Raw sql/warehouse/00_validate_dimensional_design.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+
+Get-Content -Raw sql/warehouse/01_create_warehouse_schema.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+
+Get-Content -Raw sql/warehouse/02_load_dimensions.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+
+Get-Content -Raw sql/warehouse/02b_validate_loaded_dimensions.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+
+Get-Content -Raw sql/warehouse/03_load_facts.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+
+Get-Content -Raw sql/warehouse/04_validate_warehouse.sql |
+    docker compose exec -T postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
+```
+
+### 6. Run the analytical notebook
+
+The Phase 3 notebook is stored with its executed outputs for direct GitHub review. To explore or
+rerun it locally:
+
+``` powershell
+jupyter notebook notebooks/01_warehouse_eda.ipynb
+```
+
+The notebook reads from the validated PostgreSQL `dw` schema through `src/database.py`.
+
+### Reproducibility boundary
+
+The repository contains the source schema, ingestion logic, warehouse pipeline, analytical code,
+tests, documentation, and CI configuration. The original Olist CSV files are intentionally not
+versioned, so a fresh local rebuild requires obtaining those files separately and placing them in
+`data/raw/`.
+
+GitHub Actions uses a deterministic synthetic fixture instead of the full Olist dataset. This keeps
+CI independent of local raw data while exercising the real warehouse SQL pipeline.
 
 ## Source data
 
@@ -259,27 +377,10 @@ See [`docs/phase_2_warehouse_validation.md`](docs/phase_2_warehouse_validation.m
 
 ## Rebuilding the warehouse
 
-With the PostgreSQL container running and the source `olist` schema already loaded:
-
-``` powershell
-Get-Content sql/warehouse/00_validate_dimensional_design.sql |
-    docker exec -i olist_postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
-
-Get-Content sql/warehouse/01_create_warehouse_schema.sql |
-    docker exec -i olist_postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
-
-Get-Content sql/warehouse/02_load_dimensions.sql |
-    docker exec -i olist_postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
-
-Get-Content sql/warehouse/02b_validate_loaded_dimensions.sql |
-    docker exec -i olist_postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
-
-Get-Content sql/warehouse/03_load_facts.sql |
-    docker exec -i olist_postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
-
-Get-Content sql/warehouse/04_validate_warehouse.sql |
-    docker exec -i olist_postgres psql -v ON_ERROR_STOP=1 -U olist -d olist
-```
+The complete fresh-clone workflow is documented in [Getting Started](#getting-started). If the
+source `olist` schema is already loaded, rebuild the warehouse by running the six scripts in
+`sql/warehouse/` in filename order from `00_validate_dimensional_design.sql` through
+`04_validate_warehouse.sql`.
 
 ## Documentation
 
