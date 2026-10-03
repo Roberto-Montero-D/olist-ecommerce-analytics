@@ -7,3 +7,4 @@
 *.yaml text
 *.toml text
 *.json text
+*.pbix binary
