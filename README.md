@@ -10,35 +10,16 @@ and later machine learning.
 
 ## Project status
 
-  -----------------------------------------------------------------------
-  Phase                   Scope                   Status
-  ----------------------- ----------------------- -----------------------
-  Phase 0                 Environment, raw-data   Complete
-                          audit, source schema,   
-                          ingestion, validation   
-
-  Phase 1                 SQL business analysis   Complete
-
-  Phase 2                 Dimensional modeling    Complete
-                          and PostgreSQL data     
-                          warehouse               
-
-  Phase 3                 Python exploratory      Complete
-                          analytics               
-
-  Phase 4                 Architecture, diagrams, Complete
-                          testing, and GitHub     
-                          Actions CI              
-
-  Phase 5                 Power BI / business     Complete
-                          intelligence            
-
-  Phase 6                 Feature engineering /   Next
-                          machine learning        
-
-  Phase 7                 Final portfolio /       Planned
-                          production polish       
-  -----------------------------------------------------------------------
+| Phase | Scope | Status |
+| --- | --- | --- |
+| Phase 0 | Environment, raw-data audit, source schema, ingestion, validation | Complete |
+| Phase 1 | SQL business analysis | Complete |
+| Phase 2 | Dimensional modeling and PostgreSQL data warehouse | Complete |
+| Phase 3 | Python exploratory analytics | Complete |
+| Phase 4 | Architecture, diagrams, testing, and GitHub Actions CI | Complete |
+| Phase 5 | Power BI / business intelligence | Complete |
+| Phase 6 | Feature engineering / machine learning | Next |
+| Phase 7 | Final portfolio / production polish | Planned |
 
 ## Architecture
 
@@ -84,18 +65,18 @@ geographic modeling, and CI boundary, see
 
 ## Technology
 
--   PostgreSQL 17
--   Docker / Docker Compose
--   SQL
--   Python
--   pandas
--   Jupyter
--   Power BI
--   DAX
--   Git / GitHub
--   GitHub Actions
--   pytest
--   Ruff
+- PostgreSQL 17
+- Docker / Docker Compose
+- SQL
+- Python
+- pandas
+- Jupyter
+- Power BI
+- DAX
+- Git / GitHub
+- GitHub Actions
+- pytest
+- Ruff
 
 ## Continuous Integration
 
@@ -104,17 +85,17 @@ GitHub Actions validates the repository on pushes and pull requests to
 
 The CI workflow:
 
--   runs Ruff against `src` and `tests`;
--   runs focused Python unit tests for raw-data audit behavior and
-    database configuration;
--   starts an ephemeral PostgreSQL 17 service;
--   loads a deterministic synthetic source fixture;
--   executes the real warehouse SQL pipeline;
--   runs warehouse integration tests covering fact grains, conformed
-    dimensions, geographic canonicalization/fallback behavior,
-    untranslated categories, multi-review preservation, delivery
-    derivations, financial reconciliation, and review flags;
--   lints tracked Markdown files with PyMarkdown.
+- runs Ruff against `src` and `tests`;
+- runs focused Python unit tests for raw-data audit behavior and
+  database configuration;
+- starts an ephemeral PostgreSQL 17 service;
+- loads a deterministic synthetic source fixture;
+- executes the real warehouse SQL pipeline;
+- runs warehouse integration tests covering fact grains, conformed
+  dimensions, geographic canonicalization/fallback behavior,
+  untranslated categories, multi-review preservation, delivery
+  derivations, financial reconciliation, and review flags;
+- lints tracked Markdown files with PyMarkdown.
 
 The CI database is disposable and independent of the local persistent
 Olist database. The project currently implements **CI**, not Continuous
@@ -179,10 +160,10 @@ olist-ecommerce-analytics/
 
 ### Prerequisites
 
--   Git
--   Python 3.11 or later
--   Docker Desktop with Docker Compose
--   Power BI Desktop to open the interactive report
+- Git
+- Python 3.11 or later
+- Docker Desktop with Docker Compose
+- Power BI Desktop to open the interactive report
 
 ### 1. Clone and configure the Python environment
 
@@ -323,17 +304,17 @@ files from the Kaggle dataset page and place them in `data/raw/`.
 
 Nine Olist source tables are loaded into PostgreSQL.
 
-  Table                         Rows
-  ---------------------- -----------
-  customers                   99,441
-  geolocation              1,000,163
-  order_items                112,650
-  order_payments             103,886
-  order_reviews               99,224
-  orders                      99,441
-  products                    32,951
-  sellers                      3,095
-  category_translation            71
+| Table | Rows |
+| --- | ---: |
+| customers | 99,441 |
+| geolocation | 1,000,163 |
+| order_items | 112,650 |
+| order_payments | 103,886 |
+| order_reviews | 99,224 |
+| orders | 99,441 |
+| products | 32,951 |
+| sellers | 3,095 |
+| category_translation | 71 |
 
 Five-digit Brazilian CEP prefixes are stored as character identifiers so
 leading zeroes remain significant.
@@ -345,23 +326,23 @@ The comparable business-analysis period is January 2017 through August
 
 The SQL analysis covers:
 
--   orders, revenue, freight, AOV, and monthly trends;
--   product-category and seller performance;
--   customer identity, repeat purchasing, and geography;
--   delivery performance and customer satisfaction.
+- orders, revenue, freight, AOV, and monthly trends;
+- product-category and seller performance;
+- customer identity, repeat purchasing, and geography;
+- delivery performance and customer satisfaction.
 
 Examples of validated findings include:
 
--   November 2017 delivered orders increased 62.77% month over month
-    while merchandise revenue increased 52.37%, with AOV decreasing from
-    approximately R\$144.76 to R\$135.51.
--   `health_beauty`, `watches_gifts`, and `bed_bath_table` are the three
-    largest categories by delivered merchandise revenue.
--   Repeat purchasing is uncommon in the observed period: approximately
-    3% of persistent customers have multiple delivered purchases.
--   Late deliveries are strongly associated with lower submitted review
-    scores: 2.57 stars on average versus 4.30 for on-time or early
-    deliveries.
+- November 2017 delivered orders increased 62.77% month over month
+  while merchandise revenue increased 52.37%, with AOV decreasing from
+  approximately R\$144.76 to R\$135.51.
+- `health_beauty`, `watches_gifts`, and `bed_bath_table` are the three
+  largest categories by delivered merchandise revenue.
+- Repeat purchasing is uncommon in the observed period: approximately
+  3% of persistent customers have multiple delivered purchases.
+- Late deliveries are strongly associated with lower submitted review
+  scores: 2.57 stars on average versus 4.30 for on-time or early
+  deliveries.
 
 These are descriptive historical associations; the dataset does not
 establish causal effects.
@@ -373,20 +354,20 @@ than a single flattened table.
 
 ### Dimensions
 
--   `dw.dim_date` --- one calendar date
--   `dw.dim_customer` --- one persistent `customer_unique_id`
--   `dw.dim_location` --- one five-digit CEP prefix
--   `dw.dim_product` --- one product
--   `dw.dim_seller` --- one seller
--   `dw.dim_order_status` --- one order status
+- `dw.dim_date` --- one calendar date
+- `dw.dim_customer` --- one persistent `customer_unique_id`
+- `dw.dim_location` --- one five-digit CEP prefix
+- `dw.dim_product` --- one product
+- `dw.dim_seller` --- one seller
+- `dw.dim_order_status` --- one order status
 
 ### Facts
 
--   `dw.fact_orders` --- one row per order
--   `dw.fact_order_items` --- one row per `(order_id, order_item_id)`
--   `dw.fact_payments` --- one row per `(order_id, payment_sequential)`
--   `dw.fact_reviews` --- one raw review event per
-    `(review_id, order_id)`
+- `dw.fact_orders` --- one row per order
+- `dw.fact_order_items` --- one row per `(order_id, order_item_id)`
+- `dw.fact_payments` --- one row per `(order_id, payment_sequential)`
+- `dw.fact_reviews` --- one raw review event per
+  `(review_id, order_id)`
 
 `order_id` is retained as a degenerate business identifier. Facts share
 dimensions and are not modeled with fact-to-fact foreign keys.
@@ -398,14 +379,14 @@ safely be joined directly as a one-row-per-location dimension.
 
 The warehouse:
 
-1.  preserves CEP prefixes as five-character identifiers;
-2.  performs deterministic lexical city normalization;
-3.  selects the modal normalized `(city, state)` pair per prefix;
-4.  uses deterministic lexical tie-breaking;
-5.  stores median latitude and longitude per geolocation prefix;
-6.  retains ambiguity/provenance metadata;
-7.  creates fallback location members for customer/seller prefixes
-    absent from geolocation.
+1. preserves CEP prefixes as five-character identifiers;
+2. performs deterministic lexical city normalization;
+3. selects the modal normalized `(city, state)` pair per prefix;
+4. uses deterministic lexical tie-breaking;
+5. stores median latitude and longitude per geolocation prefix;
+6. retains ambiguity/provenance metadata;
+7. creates fallback location members for customer/seller prefixes
+   absent from geolocation.
 
 Final `dim_location` contains 19,177 members: 19,015 geolocation-backed
 prefixes and 162 fallback prefixes. Pair-level ambiguity is explicitly
@@ -437,12 +418,12 @@ quality controls around the analytical pipeline.
 
 The architecture preserves a clear boundary between:
 
--   immutable raw data;
--   PostgreSQL source tables;
--   dimensional warehouse transformations;
--   Python analytics;
--   Power BI reporting;
--   automated repository and warehouse validation.
+- immutable raw data;
+- PostgreSQL source tables;
+- dimensional warehouse transformations;
+- Python analytics;
+- Power BI reporting;
+- automated repository and warehouse validation.
 
 GitHub Actions exercises the real warehouse SQL pipeline against a
 deterministic disposable test database, while destructive
@@ -461,13 +442,13 @@ directly on top of the validated PostgreSQL `dw` warehouse.
 
 The report contains three coordinated pages:
 
--   **Executive Overview** --- revenue, orders, customers, AOV,
-    fulfillment status, product categories, and customer geography.
--   **Sales & Customers** --- revenue/order trends, category
-    performance, geographic order volume, and payment mix.
--   **Delivery & Customer Experience** --- late-delivery performance,
-    review-score distribution, geographic delivery performance, and
-    customer satisfaction by delivery outcome.
+- **Executive Overview** --- revenue, orders, customers, AOV,
+  fulfillment status, product categories, and customer geography.
+- **Sales & Customers** --- revenue/order trends, category
+  performance, geographic order volume, and payment mix.
+- **Delivery & Customer Experience** --- late-delivery performance,
+  review-score distribution, geographic delivery performance, and
+  customer satisfaction by delivery outcome.
 
 The Power BI model preserves the warehouse fact constellation and
 single-direction dimensional filtering. The report adds reusable DAX
@@ -497,15 +478,15 @@ report-page documentation are in
 
 Phase 2 final validation passed:
 
--   source-to-warehouse fact row differences: 0;
--   natural-grain duplicate groups: 0;
--   tested dimensional orphan rows: 0;
--   invalid date-key mappings: 0;
--   invalid derived delivery calculations: 0;
--   merchandise-price difference from source: R\$0.00;
--   freight difference from source: R\$0.00;
--   payment-value difference from source: R\$0.00;
--   invalid review scores/comment flags: 0.
+- source-to-warehouse fact row differences: 0;
+- natural-grain duplicate groups: 0;
+- tested dimensional orphan rows: 0;
+- invalid date-key mappings: 0;
+- invalid derived delivery calculations: 0;
+- merchandise-price difference from source: R\$0.00;
+- freight difference from source: R\$0.00;
+- payment-value difference from source: R\$0.00;
+- invalid review scores/comment flags: 0.
 
 Warehouse analytical smoke tests also reproduce the established Phase 1
 revenue, category, and delivery/satisfaction results.
@@ -525,27 +506,27 @@ loaded, rebuild the warehouse by running the six scripts in
 
 ## Documentation
 
--   [`docs/data_dictionary.md`](docs/data_dictionary.md) --- immutable
-    source-layer data dictionary and data-quality notes
--   [`docs/phase_1_sql_business_analysis.md`](docs/phase_1_sql_business_analysis.md)
-    --- SQL business analysis and findings
--   [`docs/phase_2_dimensional_model.md`](docs/phase_2_dimensional_model.md)
-    --- dimensional-model design and modeling decisions
--   [`docs/phase_2_warehouse_data_dictionary.md`](docs/phase_2_warehouse_data_dictionary.md)
-    --- warehouse grains and field semantics
--   [`docs/phase_2_warehouse_validation.md`](docs/phase_2_warehouse_validation.md)
-    --- final warehouse validation record
--   [`docs/phase_3_python_eda_findings.md`](docs/phase_3_python_eda_findings.md)
-    --- Python EDA findings
--   [`docs/phase_4_system_architecture.md`](docs/phase_4_system_architecture.md)
-    --- end-to-end architecture, data modeling, and CI design
--   [`docs/phase_5_power_bi.md`](docs/phase_5_power_bi.md) --- Power BI
-    semantic model, report design, DAX/filter-context decisions, and
-    validation
--   [`docs/diagrams/`](docs/diagrams/) --- editable Graphviz sources and
-    rendered SVG architecture diagrams
--   [`docs/figures/powerbi/`](docs/figures/powerbi/) --- static
-    screenshots of the completed Power BI report
+- [`docs/data_dictionary.md`](docs/data_dictionary.md) --- immutable
+  source-layer data dictionary and data-quality notes
+- [`docs/phase_1_sql_business_analysis.md`](docs/phase_1_sql_business_analysis.md)
+  --- SQL business analysis and findings
+- [`docs/phase_2_dimensional_model.md`](docs/phase_2_dimensional_model.md)
+  --- dimensional-model design and modeling decisions
+- [`docs/phase_2_warehouse_data_dictionary.md`](docs/phase_2_warehouse_data_dictionary.md)
+  --- warehouse grains and field semantics
+- [`docs/phase_2_warehouse_validation.md`](docs/phase_2_warehouse_validation.md)
+  --- final warehouse validation record
+- [`docs/phase_3_python_eda_findings.md`](docs/phase_3_python_eda_findings.md)
+  --- Python EDA findings
+- [`docs/phase_4_system_architecture.md`](docs/phase_4_system_architecture.md)
+  --- end-to-end architecture, data modeling, and CI design
+- [`docs/phase_5_power_bi.md`](docs/phase_5_power_bi.md) --- Power BI
+  semantic model, report design, DAX/filter-context decisions, and
+  validation
+- [`docs/diagrams/`](docs/diagrams/) --- editable Graphviz sources and
+  rendered SVG architecture diagrams
+- [`docs/figures/powerbi/`](docs/figures/powerbi/) --- static
+  screenshots of the completed Power BI report
 
 ## Next phase
 
