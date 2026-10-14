@@ -8,6 +8,8 @@ __pycache__/
 
 # Environment variables
 .env
+.env.*
+!.env.example
 
 # Raw and processed data
 data/raw/*
